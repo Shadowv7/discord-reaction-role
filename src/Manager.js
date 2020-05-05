@@ -28,9 +28,7 @@ class ReactionRolesManager extends EventEmitter {
         if(!guild) return;
         const role = guild.roles.cache.get(reaction_role.roleID);
         if(!role) return;
-        const guildMember = guild.members.cache.get(packet.d.user_id) || guild.members.fetch(packet.d.user_id)
-        if (!guildMember) return;
-        const member = !guildMember.user.bot
+        const member = guild.members.cache.get(packet.d.user_id) || guild.members.fetch(packet.d.user_id)
         if(!member) return;
         const channel = guild.channels.cache.get(packet.d.channel_id) 
         if(!channel) return;
