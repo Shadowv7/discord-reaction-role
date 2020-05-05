@@ -1,6 +1,6 @@
 # Discord Reaction Role
 
-Discord Reaction Role is a powerful Node.js module that allows you to easily create reactions roles !
+Discord Reaction Role is a powerful [Node.js](https://nodejs.org) module that allows you to easily create reactions roles !
 
 ## Installation
 
