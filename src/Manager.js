@@ -1,6 +1,10 @@
 const { EventEmitter } = require('events');
 const mergeOptions = require('merge-options');
-const Database = require('easy-json-database')
+const { writeFile, readFile, exists } = require('fs');
+const { promisify } = require('util');
+const writeFileAsync = promisify(writeFile);
+const existsAsync = promisify(exists);
+const readFileAsync = promisify(readFile);
 
 const { ReactionRoleManager } = require('./Util');
 const ReactionRole = require('./ReactionRole')
@@ -13,8 +17,6 @@ class ReactionRolesManager extends EventEmitter {
 
     this.options = mergeOptions(ReactionRoleManager, options)
 
-    this.database = new Database(this.options.storage)
-
     this.reactionRole = []
 
     this.client.on("raw", async (packet) => {
@@ -26,11 +28,13 @@ class ReactionRolesManager extends EventEmitter {
         if(!guild) return;
         const role = guild.roles.cache.get(reaction_role.roleID);
         if(!role) return;
-        const member = guild.members.cache.get(packet.d.user_id) || guild.members.fetch(packet.d.user_id)
-        if(!member);
+        const guildMember = guild.members.cache.get(packet.d.user_id) || guild.members.fetch(packet.d.user_id)
+        if (!guildMember) return;
+        const member = !guildMember.user.bot
+        if(!member) return;
         const channel = guild.channels.cache.get(packet.d.channel_id) 
         if(!channel) return;
-        const message = channel.messages.cache.get(packet.d.message_id) || await channel.message.fetch(packet.d.message_id)
+        const message = channel.messages.cache.get(packet.d.message_id) || await channel.messages.fetch(packet.d.message_id)
         if(!message) return;
         if (packet.d.emoji.name !== reaction_role.reaction) return;
         const reaction = message.reactions.cache.get(reaction_role.reaction)
@@ -78,24 +82,50 @@ class ReactionRolesManager extends EventEmitter {
         msg.react(options.reaction)
       })
       this.reactionRole.push(reactionrole.data);
-      this.database.set(options.channel.guild.id,this.reactionRole)
-      console.log(this.database)
+      this.saveReactionRole(options.messageID,this.reactionRole)
+      console.log(await readFileAsync(this.options.storage))
       resolve(reactionrole);
     })
   }
 
+  async refreshStorage() {
+    return true;
+  }
 
   async getAllReactionRoles() {
-    const { readFile } = require('fs');
-    const { promisify } = require('util');
-    const readFileAsync = promisify(readFile);
-    const storageContent = await readFileAsync(this.options.storage)
-    let rr = JSON.parse(storageContent)
-    console.log(rr);
-    if (Array.isArray(rr)) {
-      return rr;
+    // Whether the storage file exists, or not
+    let storageExists = await existsAsync(this.options.storage);
+    // If it doesn't exists
+    if (!storageExists) {
+      // Create the file with an empty array
+      await writeFileAsync(this.options.storage, '[]', 'utf-8');
+      return [];
+    } else {
+      // If the file exists, read it
+      let storageContent = await readFileAsync(this.options.storage);
+      try {
+        let giveaways = await JSON.parse(storageContent);
+        if (Array.isArray(giveaways)) {
+          return giveaways;
+        } else {
+          console.log(storageContent, giveaways);
+          throw new SyntaxError('The storage file is not properly formatted.');
+        }
+      } catch (e) {
+        if (e.message === 'Unexpected end of JSON input') {
+          throw new SyntaxError('The storage file is not properly formatted.', e);
+        } else {
+          throw e;
+        }
+      }
+    }
   }
-}
+
+  async saveReactionRole(_messageID, _reactionRoleData) {
+    await writeFileAsync(this.options.storage, JSON.stringify(this.reactionRole), 'utf-8');
+    this.refreshStorage();
+    return;
+  }
     async _init() {
       this.reactionRole = await this.getAllReactionRoles()
       this.ready = true;
