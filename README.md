@@ -1,6 +1,8 @@
 # Discord Reaction Role
+[![downloadsBadge](https://img.shields.io/npm/dt/discord-reaction-role?style=for-the-badge)](https://npmjs.com/discord-reaction-role)
+[![versionBadge](https://img.shields.io/npm/v/discord-reaction-role?style=for-the-badge)](https://npmjs.com/discord-reaction-roles)
 
-Discord Reaction Role is a powerful Node.js module that allows you to easily create reactions roles !
+Discord Reaction Role is a powerful [Node.js](https://nodejs.org) module that allows you to easily create reactions roles !
 
 ## Installation
 
