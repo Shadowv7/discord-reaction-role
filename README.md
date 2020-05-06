@@ -1,8 +1,6 @@
 # Discord Reaction Role
-[![downloadsBadge](https://img.shields.io/npm/dt/discord-reaction-role?style=for-the-badge)](https://npmjs.com/discord-reaction-role)
-[![versionBadge](https://img.shields.io/npm/v/discord-reaction-role?style=for-the-badge)](https://npmjs.com/discord-reaction-role)
 
-Discord Reaction Role is a powerful [Node.js](https://nodejs.org) module that allows you to easily create reactions roles !
+Discord Reaction Role is a powerful Node.js module that allows you to easily create reactions roles !
 
 ## Installation
 
@@ -44,12 +42,21 @@ client.login(settings.token);
 ### Start
 
 ```js
-client.reactionRoleManager.start({
+client.reactionRoleManager.create({
       messageID: '706857963188387903',
       channel: message.channel,
       reaction: '✅',
       role: message.guild.roles.cache.get('675995543062839306')
 })
+```
+
+### Delete
+
+```js
+client.reactionRoleManager.delete({
+          messageID: "707532556223905802",
+          reaction: "✅",
+        });
 ```
 
 ### Fetch the reaction role
@@ -59,6 +66,6 @@ client.reactionRoleManager.start({
     let allReactionRoles = client.reactionRoleManager.reactionRole; // [ {ReactionRole}, {ReactionRole} ]
 
     // The list of all the giveaways on the server with ID "1909282092"
-    let onServer = client.reactionRoleManager.reactionRole.filter((g) => g.guildID === "1909282092");
+    let onServer = client.reactionRoleManager.reactionRole.filter((rr) => rr.guildID === "1909282092");
 ```
 
