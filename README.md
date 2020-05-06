@@ -83,7 +83,7 @@ client.reactionRoleManager.on('reactionRoleAdded',(reactionRole,member,role,reac
 ### reactionRoleRemoved
 
 ```js
-client.manager.on("reactionRoleRemoved", (reactionRole, member, role, reaction) => {
+client.reactionRoleManager.on("reactionRoleRemoved", (reactionRole, member, role, reaction) => {
   console.log(`${member.user.username} removed his reaction \`${reaction}\` and lost the role : ${role.name}`)
 });
 ```
