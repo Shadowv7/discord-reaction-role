@@ -20,18 +20,6 @@ class ReactionRole extends EventEmitter {
 
     this.options = options;
   }
-
-  get channel(){
-    this.client.guilds.cache.get(this.guildID).channels.cache.get(this.channelID)
-  }
-
-  get role(){
-    this.client.guilds.cache.get(this.guildID).roles.cache.get(this.roleID)
-  }
-
-  get fetchMessage(){
-    this.channel.messages.fetch(this.messageID)
-  }
   get data(){
     const baseData = {
       messageID: this.messageID,
