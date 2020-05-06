@@ -1,5 +1,5 @@
 const ReactionRoleManager = {
-  storage : './db.json',
+  storage : './reaction-role.json',
 }
 module.exports = {
   ReactionRoleManager
