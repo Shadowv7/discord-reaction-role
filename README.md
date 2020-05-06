@@ -70,4 +70,24 @@ client.reactionRoleManager.delete({
     // The list of all the giveaways on the server with ID "1909282092"
     let onServer = client.reactionRoleManager.reactionRole.filter((rr) => rr.guildID === "1909282092");
 ```
+## Events
 
+### reactionRoleAdded
+
+```js
+client.reactionRoleManager.on('reactionRoleAdded',(reactionRole,member,role,reaction) => {
+  console.log(`${member.user.username} added his reaction \`${reaction}\` and won the role : ${role.name}`);
+})
+```
+
+### reactionRoleRemoved
+
+```js
+client.manager.on("reactionRoleRemoved", (reactionRole, member, role, reaction) => {
+  console.log(`${member.user.username} removed his reaction \`${reaction}\` and lost the role : ${role.name}`)
+});
+```
+
+# Credits
+
+Thanks to [Androz2091](https://github.com/Androz2091) for helping me on this project.
