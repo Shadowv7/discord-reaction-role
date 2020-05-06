@@ -48,8 +48,22 @@ class ReactionRolesManager extends EventEmitter {
         if (!reaction) return;
         if (packet.t === "MESSAGE_REACTION_ADD") {
           member.roles.add(role);
+           this.emit(
+             "reactionRoleAdded",
+             reaction_role,
+             member,
+             role,
+             reaction_role.reaction
+           );
         } else {
           member.roles.remove(role);
+          this.emit(
+            "reactionRoleRemoved",
+            reaction_role,
+            member,
+            role,
+            reaction_role.reaction
+          );
         }
       }
     });
@@ -105,12 +119,12 @@ class ReactionRolesManager extends EventEmitter {
         });
       this.reactionRole.push(reactionrole.data);
       this.saveReactionRole(options.messageID, this.reactionRole);
-      console.log(await readFileAsync(this.options.storage));
       resolve(reactionrole);
     });
   }
   
   delete(options = {}){
+  return new Promise(async (resolve, reject) => {
     if (!options.reaction) {
       return reject(
         `options.reaction is not a string. (val=${options.reaction})`
@@ -122,6 +136,9 @@ class ReactionRolesManager extends EventEmitter {
       );
     }
     this.deleteReactionRole(options.messageID,options.reaction)
+    resolve()
+  })
+
   }
 
   async refreshStorage() {
