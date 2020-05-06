@@ -1,6 +1,6 @@
 {
   "name": "discord-reaction-role",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -8,6 +8,13 @@
     "easy-json-database": "^1.1.0",
     "events": "^3.1.0",
     "merge-options": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shadowv7/discord-reaction-role.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Shadowv7/discord-reaction-role/issues"
   },
   "devDependencies": {},
   "scripts": {
