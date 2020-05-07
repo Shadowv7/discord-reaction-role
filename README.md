@@ -67,7 +67,7 @@ client.reactionRoleManager.delete({
     // The list of all the reaction roles
     let allReactionRoles = client.reactionRoleManager.reactionRole; // [ {ReactionRole}, {ReactionRole} ]
 
-    // The list of all the giveaways on the server with ID "1909282092"
+    // The list of all the reaction roles on the server with ID "1909282092"
     let onServer = client.reactionRoleManager.reactionRole.filter((rr) => rr.guildID === "1909282092");
 ```
 ## Events
