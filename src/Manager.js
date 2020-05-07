@@ -43,7 +43,7 @@ class ReactionRolesManager extends EventEmitter {
           channel.messages.cache.get(packet.d.message_id) ||
           (await channel.messages.fetch(packet.d.message_id));
         if (!message) return;
-        if (packet.d.emoji.name !== reaction_role.reaction) return;
+        if (packet.d.emoji.name !== reaction_role.reaction || packet.d.emoji.id !== reaction_role.reaction) return;
         const reaction = message.reactions.cache.get(reaction_role.reaction);
         if (!reaction) return;
         if (packet.t === "MESSAGE_REACTION_ADD") {
