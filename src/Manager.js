@@ -26,7 +26,7 @@ class ReactionRolesManager extends EventEmitter {
         return;
       if (this.reactionRole.some((g) => g.messageID === packet.d.message_id)) {
         const reactionRoleData = this.reactionRole.find(
-          (g) => g.messageID === packet.d.message_id && g.reaction === packet.d.emoji.name
+          (g) => g.messageID === packet.d.message_id && g.reaction === packet.d.emoji.name || g.messageID === packet.d.message_id && g.reaction === packet.d.emoji.id
         );
         const reaction_role = new ReactionRole(this, reactionRoleData);
         const guild = this.client.guilds.cache.get(packet.d.guild_id);
