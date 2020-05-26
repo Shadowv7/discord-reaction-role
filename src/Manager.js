@@ -24,10 +24,10 @@ class ReactionRolesManager extends EventEmitter {
         !["MESSAGE_REACTION_ADD", "MESSAGE_REACTION_REMOVE"].includes(packet.t)
       )
         return;
+        
       if (this.reactionRole.some((g) => g.messageID === packet.d.message_id)) {
         const reactionRoleData = this.reactionRole.find(
-          (g) => g.messageID === packet.d.message_id && g.reaction === packet.d.emoji.name || g.messageID === packet.d.message_id && g.reaction === packet.d.emoji.id
-        );
+          (g) => g.messageID === packet.d.message_id && g.reaction === packet.d.emoji.name || g.messageID === packet.d.message_id && g.reaction === packet.d.emoji.id)
         const reaction_role = new ReactionRole(this, reactionRoleData);
         const guild = this.client.guilds.cache.get(packet.d.guild_id);
         if (!guild) return;
@@ -43,7 +43,7 @@ class ReactionRolesManager extends EventEmitter {
           channel.messages.cache.get(packet.d.message_id) ||
           (await channel.messages.fetch(packet.d.message_id));
         if (!message) return;
-        if (packet.d.emoji.name !== reaction_role.reaction || packet.d.emoji.id !== reaction_role.reaction) return;
+        if (packet.d.emoji.name !== reaction_role.reaction && packet.d.emoji.id !== reaction_role.reaction) return;
         const reaction = message.reactions.cache.get(reaction_role.reaction);
         if (!reaction) return;
         if (packet.t === "MESSAGE_REACTION_ADD") {
@@ -55,6 +55,7 @@ class ReactionRolesManager extends EventEmitter {
              role,
              reaction_role.reaction
            );
+          
         } else {
           member.roles.remove(role);
           this.emit(
@@ -64,7 +65,8 @@ class ReactionRolesManager extends EventEmitter {
             role,
             reaction_role.reaction
           );
-        }
+        
+      }
       }
     });
 
