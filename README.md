@@ -80,13 +80,51 @@ client.reactionRoleManager.on('reactionRoleAdded',(reactionRole,member,role,reac
 ```
 
 ### reactionRoleRemoved
-
 ```js
 client.reactionRoleManager.on("reactionRoleRemoved", (reactionRole, member, role, reaction) => {
   console.log(`${member.user.username} removed his reaction \`${reaction}\` and lost the role : ${role.name}`)
 });
 ```
+# Custom database
+An example with quick.db
+```js
+const Discord = require('discord.js');
+const ReactionRolesManager = require("./index");
+const client = new Discord.Client();
 
+const settings = {
+  prefix: 'u.',
+  token: 'NjUyMzg0NzA0NjE1Njc3OTUy.Xq2a5w.vWUOsqZ_y4UqM1dvac-rf080Ieo'
+};
+
+const db = require("quick.db");
+if (!db.get("reaction-role")) db.set("reaction-role", []);
+
+const reactionRoleManager = class extends ReactionRolesManager {
+  async getAllReactionRoles() {
+   return db.get("reaction-role");
+  }
+
+  async saveReactionRole(messageID, reactionRoleData) {
+    db.push("reaction-role", reactionRoleData);
+    return true;
+  }
+
+  async deleteReactionRole(messageID,reaction){
+    const array = db.get("reaction-role").filter((r) => r.messageID !== messageID || r.reaction !== reaction)
+    
+    db.set("reaction-role", array)
+
+    return true;
+  }
+};
+
+client.reactionRoleManager = new reactionRoleManager(client,{
+  storage: false
+})
+
+client.login(settings.token);
+```
 # Credits
 
 Thanks to [Androz2091](https://github.com/Androz2091) for helping me on this project.
