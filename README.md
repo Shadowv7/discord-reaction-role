@@ -93,8 +93,8 @@ const ReactionRolesManager = require("./index");
 const client = new Discord.Client();
 
 const settings = {
-  prefix: 'u.',
-  token: 'NjUyMzg0NzA0NjE1Njc3OTUy.Xq2a5w.vWUOsqZ_y4UqM1dvac-rf080Ieo'
+  prefix: 'r!',
+  token: 'Your bot token'
 };
 
 const db = require("quick.db");
