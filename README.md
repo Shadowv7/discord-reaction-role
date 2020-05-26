@@ -1,6 +1,6 @@
 # Discord Reaction Role
 [![downloadsBadge](https://img.shields.io/npm/dt/discord-reaction-role?style=for-the-badge)](https://npmjs.com/discord-reaction-role)
-[![versionBadge](https://img.shields.io/npm/v/discord-reaction-role?style=for-the-badge)](https://npmjs.com/discord-reaction-role)
+[![versionBadge](https://img.shields.io/npm/v/discord-reaction-role?style=for-the-badge)](https://npmjs.com/discord-reaction-roles)
 
 Discord Reaction Role is a powerful [Node.js](https://nodejs.org) module that allows you to easily create reactions roles !
 
@@ -18,7 +18,7 @@ npm i discord-reaction-role
 const Discord = require("discord.js"),
 client = new Discord.Client(),
 settings = {
-    prefix: "g!",
+    prefix: "r!",
     token: "Your Discord Token"
 };
 
@@ -67,7 +67,6 @@ client.reactionRoleManager.delete({
     // The list of all the reaction roles
     let allReactionRoles = client.reactionRoleManager.reactionRole; // [ {ReactionRole}, {ReactionRole} ]
 
-    // The list of all the reaction roles on the server with ID "1909282092"
     let onServer = client.reactionRoleManager.reactionRole.filter((rr) => rr.guildID === "1909282092");
 ```
 ## Events
