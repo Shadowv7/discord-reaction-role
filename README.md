@@ -12,7 +12,7 @@ npm i discord-reaction-role
 
 ## Exemple
 
-### Lunch of the module
+### Launch of the module
 
 ```js
 const Discord = require("discord.js"),
