@@ -10,9 +10,9 @@ Discord Reaction Role is a powerful [Node.js](https://nodejs.org) module that al
 npm i discord-reaction-role
 ```
 
-## Exemple
+## Example
 
-### Lunch of the module
+### Launch of the module
 
 ```js
 const Discord = require("discord.js"),
